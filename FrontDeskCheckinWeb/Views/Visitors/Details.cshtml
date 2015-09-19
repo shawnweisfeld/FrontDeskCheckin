@@ -1,0 +1,66 @@
+﻿@model FrontDeskCheckinWeb.Data.Visitor
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Visitor</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Company)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Company)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sponsor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sponsor)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ArrivedAt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ArrivedAt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DepartedAt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DepartedAt)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

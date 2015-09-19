@@ -1,0 +1,65 @@
+﻿<Page
+    x:Class="FrontDeskCheckinClient.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FrontDeskCheckinClient"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    DataContext="{Binding Path=MainPage, Source={StaticResource ViewModelLocator}}"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        
+        <Image Source="Assets\new-microsoft-logo-square-large.jpg" Width="500" HorizontalAlignment="Left" Margin="10" />
+        <StackPanel Grid.Row="0" Grid.Column="1"  Margin="10" VerticalAlignment="Center" >
+            <TextBlock Text="Welcome To:" FontSize="40" HorizontalAlignment="Center" />
+            <TextBlock Text="{Binding Path=Terminal.SiteName}" FontSize="40" HorizontalAlignment="Center" />    
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Grid.Column="0">
+            <TextBlock Text="Check In:" FontSize="40" />
+            
+            <TextBlock Text="First Name:" Margin="10" FontSize="32" />
+            <TextBox Text="{Binding Path=FirstName, Mode=TwoWay}" Margin="10" FontSize="32" />
+
+            <TextBlock Text="Last Name:" Margin="10" FontSize="32" />
+            <TextBox Text="{Binding Path=LastName, Mode=TwoWay}" Margin="10" FontSize="32" />
+
+            <TextBlock Text="Company:" Margin="10" FontSize="32" />
+            <TextBox Text="{Binding Path=Company, Mode=TwoWay}" Margin="10" FontSize="32" />
+
+            <Button Command="{Binding CheckinCommand}" Margin="10" HorizontalAlignment="Right" FontSize="32">Check In</Button>
+            
+        </StackPanel>
+
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <ScrollViewer Grid.Row="0" >
+                <ListView ItemsSource="{Binding Path=Visitors}" SelectedItem="{Binding Path=SelectedVisitor, Mode=TwoWay}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" FontSize="20" />
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>                
+            </ScrollViewer>
+            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Command="{Binding RefreshCommand}" Margin="10" FontSize="32">Refresh</Button>    
+                <Button Command="{Binding CheckoutCommand}" Margin="10" FontSize="32">Check Out</Button>    
+            </StackPanel>
+        </Grid>
+        
+
+    </Grid>
+</Page>
