@@ -162,6 +162,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\Export\Index.cs" />
+    <Compile Include="ViewModels\Home\Index.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\Checkin.mdf" />
