@@ -69,8 +69,8 @@ namespace FrontDeskCheckinWeb.Controllers
 
                     if (visitor.DepartedAt > visitor.ArrivedAt)
                     {
-                        sheet.Cells[row, col++].Value = visitor.DepartedAt.ToString("HH:mm");
                         sheet.Cells[row, col++].Value = visitor.DepartedAt.ToShortDateString();
+                        sheet.Cells[row, col++].Value = visitor.DepartedAt.ToString("HH:mm");
                     }
                     else
                     {
