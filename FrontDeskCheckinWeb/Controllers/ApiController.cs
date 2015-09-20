@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 using System.Data.SqlTypes;
+using Newtonsoft.Json;
 
 namespace FrontDeskCheckinWeb.Controllers
 {
@@ -109,9 +110,9 @@ namespace FrontDeskCheckinWeb.Controllers
                 }
 
 
-                var result = new JsonResult();
-                result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-                result.Data = terminal;
+                var result = new ContentResult();
+                result.Content = JsonConvert.SerializeObject(terminal);
+                result.ContentType = "application/json";
 
                 return result;
             }

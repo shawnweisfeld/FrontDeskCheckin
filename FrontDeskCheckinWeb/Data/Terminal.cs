@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,8 @@ namespace FrontDeskCheckinWeb.Data
         public string Key { get; set; }
         public string SiteName { get; set; }
         public string Building { get; set; }
+
+        [JsonIgnore]
         public virtual List<Visitor> Visitors { get; set; }
     }
 }
