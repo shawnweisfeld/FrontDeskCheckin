@@ -1,12 +1,8 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FrontDeskCheckinClient.ViewModel
@@ -23,13 +19,13 @@ namespace FrontDeskCheckinClient.ViewModel
                 async () => await Checkout(),
                 () => CanCheckout());
             RefreshCommand = new RelayCommand(
-                async () => this.Visitors = await RefreshList());
+                async () => this.Visitors = await ApiService.GetVisitors(this.Terminal.Key));
         }
 
         private async void Init()
         {
             this.Terminal = await ClientIdentiy.Get();
-            this.Visitors = await RefreshList();
+            this.Visitors = await ApiService.GetVisitors(this.Terminal.Key);
         }
 
         private async Task Checkin()
@@ -45,13 +41,7 @@ namespace FrontDeskCheckinClient.ViewModel
                 Terminal = Terminal
             };
 
-            using (HttpClient client = new HttpClient())
-            {
-                var url = "http://localhost:9958/Api/AddVisitor";
-                var content = new StringContent(JsonConvert.SerializeObject(v));
-                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                var result = await client.PostAsync(url, content);
-            }
+            await ApiService.AddVisitor(v);
 
             //clear the UI
             this.FirstName = string.Empty;
@@ -59,7 +49,7 @@ namespace FrontDeskCheckinClient.ViewModel
             this.Company = string.Empty;
             this.Sponsor = string.Empty;
 
-            this.Visitors = await RefreshList();
+            this.Visitors = await ApiService.GetVisitors(this.Terminal.Key);
         }
 
         private bool CanCheckin()
@@ -71,17 +61,9 @@ namespace FrontDeskCheckinClient.ViewModel
 
         private async Task Checkout()
         {
-            using (HttpClient client = new HttpClient())
-            {
-                var tmp = this.SelectedVisitor;
-                tmp.DepartedAt = DateTime.Now;
-                var url = "http://localhost:9958/Api/CheckoutVisitor";
-                var content = new StringContent(JsonConvert.SerializeObject(tmp));
-                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                var result = await client.PostAsync(url, content);
-            }
+            await ApiService.Checkout(this.SelectedVisitor);
 
-            this.Visitors = await RefreshList();
+            this.Visitors = await ApiService.GetVisitors(this.Terminal.Key);
         }
 
         private bool CanCheckout()
@@ -89,17 +71,6 @@ namespace FrontDeskCheckinClient.ViewModel
             return this.Visitors != null
                 && this.Visitors.Any()
                 && this.SelectedVisitor != null;
-        }
-
-        private async Task<List<Visitor>> RefreshList()
-        {
-            //refresh the list of people
-            using (HttpClient client = new HttpClient())
-            {
-                var url = string.Format("http://localhost:9958/Api/GetVisitors/{0}", terminal.Key);
-                var result = await client.GetStringAsync(url);
-                return JsonConvert.DeserializeObject<List<Visitor>>(result).OrderBy(x => x.ToString()).ToList();
-            }
         }
 
         private Terminal terminal;

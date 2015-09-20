@@ -1,11 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.IO.IsolatedStorage;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FrontDeskCheckinClient
@@ -31,14 +27,7 @@ namespace FrontDeskCheckinClient
                     }
                 }
 
-                //Get the details from the service
-                var url = string.Format("http://localhost:9958/Api/GetTerminal/{0}", terminalKey);
-
-                using (HttpClient client = new HttpClient())
-                {
-                    var result = await client.GetStringAsync(url);
-                    terminal = JsonConvert.DeserializeObject<Terminal>(result);
-                }
+                terminal = await ApiService.GetTerminal(terminalKey);
 
                 //cache it to isolated storage
                 using (StreamWriter sw = new StreamWriter(store.OpenFile(configFile, FileMode.Create)))
