@@ -19,10 +19,15 @@ namespace FrontDeskCheckinClient
 
         public override string ToString()
         {
-            if (string.IsNullOrEmpty(Company))
-                return string.Format("{0}, {1}", LastName, FirstName);
-            else
-                return string.Format("{0}, {1} : {2}", LastName, FirstName, Company);
+            var tmp = string.Format("{0}, {1}", LastName, FirstName);
+
+            if (!string.IsNullOrEmpty(Company))
+                tmp += string.Format(" ({0})", Company);
+
+            if (!string.IsNullOrEmpty(Sponsor))
+                tmp += string.Format(": {0}", Sponsor);
+
+            return tmp;
         }
     }
 }

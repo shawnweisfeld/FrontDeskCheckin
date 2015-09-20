@@ -40,6 +40,7 @@ namespace FrontDeskCheckinClient.ViewModel
                 FirstName = FirstName,
                 LastName = LastName,
                 Company = Company,
+                Sponsor = Sponsor,
                 ArrivedAt = DateTime.Now,
                 Terminal = Terminal
             };
@@ -56,6 +57,7 @@ namespace FrontDeskCheckinClient.ViewModel
             this.FirstName = string.Empty;
             this.LastName = string.Empty;
             this.Company = string.Empty;
+            this.Sponsor = string.Empty;
 
             this.Visitors = await RefreshList();
         }
@@ -190,6 +192,21 @@ namespace FrontDeskCheckinClient.ViewModel
             set
             {
                 company = value;
+                RaisePropertyChanged();
+                CheckinCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        private string sponsor;
+        public string Sponsor
+        {
+            get
+            {
+                return sponsor;
+            }
+            set
+            {
+                sponsor = value;
                 RaisePropertyChanged();
                 CheckinCommand.RaiseCanExecuteChanged();
             }

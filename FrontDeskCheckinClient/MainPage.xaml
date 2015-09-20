@@ -36,6 +36,9 @@
             <TextBlock Text="Company:" Margin="10" FontSize="32" />
             <TextBox Text="{Binding Path=Company, Mode=TwoWay}" Margin="10" FontSize="32" />
 
+            <TextBlock Text="Sponsor:" Margin="10" FontSize="32" />
+            <TextBox Text="{Binding Path=Sponsor, Mode=TwoWay}" Margin="10" FontSize="32" />
+            
             <Button Command="{Binding CheckinCommand}" Margin="10" HorizontalAlignment="Right" FontSize="32">Check In</Button>
             
         </StackPanel>
