@@ -13,6 +13,9 @@
                 Total Visitors
             </td>
             <td>
+                Total Terminals
+            </td>
+            <td>
                 First Visitor
             </td>
             <td>
@@ -31,16 +34,25 @@
     {
         <tr>
             <td>
-                @building.Name
+                @Html.ActionLink(building.Name, "Index", "Terminals", new { building = building.Name }, null)
             </td>
             <td>
                 @building.TotalVisitors
             </td>
             <td>
-                @building.FirstVisitor.ToShortDateString()
+                @building.Terminals
             </td>
             <td>
-                @building.LastVisitor.ToShortDateString()
+                @if (building.FirstVisitor.HasValue)
+                {
+                    @building.FirstVisitor.Value.ToShortDateString()
+                }
+            </td>
+            <td>
+                @if (building.LastVisitor.HasValue)
+                {
+                    @building.LastVisitor.Value.ToShortDateString()
+                }
             </td>
             <td>
                 @building.AverageDailyVisitors.ToString("N")

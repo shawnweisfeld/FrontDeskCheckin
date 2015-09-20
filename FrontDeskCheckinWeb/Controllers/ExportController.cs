@@ -16,25 +16,6 @@ namespace FrontDeskCheckinWeb.Controllers
     {
         private AppContext db = new AppContext();
 
-        public async Task<ActionResult> Index()
-        {
-            var buildings = await db.Terminals
-                .Select(x => x.Building)
-                .Distinct()
-                .OrderBy(x => x)
-                .ToListAsync();
-
-            var vm = new ViewModels.Export.Index();
-
-            vm.Buildings = buildings.Select(x => new SelectListItem()
-            {
-                Text = x,
-                Value = x
-            }).ToList();
-
-            return View(vm);        
-        }
-
         [HttpPost]
         public async Task<ActionResult> Excel(DateTime reportdate, string building)
         {

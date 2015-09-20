@@ -2,13 +2,35 @@
 
 @{
     ViewBag.Title = "Index";
+    var building = Request.QueryString["building"];
 }
 
-<h2>Index</h2>
 
-<p>
+<h2>Export Visitor Log for @building</h2>
+
+@using (Html.BeginForm("Excel", "Export", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.Hidden("building", building)
+        <div class="form-group">
+            <label for="reportdate" class="col-md-2 control-label">Date</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" id="reportdate" name="reportdate" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Export" class="btn btn-default" />
+            </div>
+        </div>
+} 
+
+
+<h2>Terminals in @building</h2>
+
+@*<p>
     @Html.ActionLink("Create New", "Create")
-</p>
+</p>*@
 <table class="table">
     <tr>
         <th>
@@ -35,11 +57,19 @@
             @Html.DisplayFor(modelItem => item.Building)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id, building=building }) @*|
             @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })*@
         </td>
     </tr>
 }
 
 </table>
+
+@section scripts {
+    <script type="text/javascript">
+    $(function () {
+        $("#reportdate").datepicker();
+    });
+    </script>
+}

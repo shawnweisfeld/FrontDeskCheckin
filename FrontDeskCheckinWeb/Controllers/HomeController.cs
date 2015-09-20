@@ -18,22 +18,26 @@ namespace FrontDeskCheckinWeb.Controllers
         {
             var vm = new Index();
 
-            vm.Buildings = await db.Visitors
-                .GroupBy(x => x.Terminal.Building)
+            vm.Buildings = await db.Terminals
+                .GroupBy(x => x.Building)
                 .Select(x => new BuildingDetail()
                 {
                     Name = x.Key,
-                    TotalVisitors = x.Count(),
-                    FirstVisitor = x.Min(y => y.ArrivedAt),
-                    LastVisitor = x.Max(y => y.ArrivedAt)
+                    TotalVisitors = x.SelectMany(y => y.Visitors).Count(),
+                    Terminals = x.Count(),
+                    FirstVisitor = x.SelectMany(y => y.Visitors).Min(y => y.ArrivedAt),
+                    LastVisitor = x.SelectMany(y => y.Visitors).Max(y => y.ArrivedAt),
                 })
                 .ToListAsync();
 
             foreach (var building in vm.Buildings)
             {
-                var buildingOpen = building.LastVisitor.Subtract(building.FirstVisitor);
-                building.AverageDailyVisitors = building.TotalVisitors / buildingOpen.TotalDays;
-                building.AverageMonthlyVisitors = building.TotalVisitors / (buildingOpen.TotalDays / 30);
+                if (building.FirstVisitor.HasValue && building.LastVisitor.HasValue)
+                {
+                    var buildingOpen = building.LastVisitor.Value.Subtract(building.FirstVisitor.Value);
+                    building.AverageDailyVisitors = building.TotalVisitors / buildingOpen.TotalDays;
+                    building.AverageMonthlyVisitors = building.TotalVisitors / (buildingOpen.TotalDays / 30);
+                }
             }
 
             return View(vm);

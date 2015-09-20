@@ -16,9 +16,9 @@ namespace FrontDeskCheckinWeb.Controllers
         private AppContext db = new AppContext();
 
         // GET: Terminals
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string building)
         {
-            return View(await db.Terminals.ToListAsync());
+            return View(await db.Terminals.Where(x => x.Building == building).ToListAsync());
         }
 
         // GET: Terminals/Details/5
@@ -85,7 +85,7 @@ namespace FrontDeskCheckinWeb.Controllers
             {
                 db.Entry(terminal).State = EntityState.Modified;
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { building = terminal.Building });
             }
             return View(terminal);
         }

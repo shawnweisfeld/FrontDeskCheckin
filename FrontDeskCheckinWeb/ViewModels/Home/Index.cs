@@ -17,7 +17,8 @@ namespace FrontDeskCheckinWeb.ViewModels.Home
         public int TotalVisitors { get; set; }
         public double AverageDailyVisitors { get; set; }
         public double AverageMonthlyVisitors { get; set; }
-        public DateTime FirstVisitor { get; set; }
-        public DateTime LastVisitor { get; set; }
+        public int Terminals { get; set; }
+        public DateTime? FirstVisitor { get; set; }
+        public DateTime? LastVisitor { get; set; }
     }
 }
