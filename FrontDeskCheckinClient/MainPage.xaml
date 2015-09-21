@@ -23,6 +23,7 @@
             <TextBlock Text="Welcome To:" FontSize="40" HorizontalAlignment="Center" />
             <TextBlock Text="{Binding Path=Terminal.SiteName}" FontSize="40" HorizontalAlignment="Center" />    
         </StackPanel>
+        
 
         <StackPanel Grid.Row="1" Grid.Column="0">
             <TextBlock Text="Check In:" FontSize="40" />
@@ -42,6 +43,7 @@
             <Button Command="{Binding CheckinCommand}" Margin="10" HorizontalAlignment="Right" FontSize="32">Check In</Button>
             
         </StackPanel>
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Path=Terminal.Key}" VerticalAlignment="Bottom" FontSize="10" HorizontalAlignment="Left" Foreground="#FFB0B0B0" />    
 
         <Grid Grid.Row="1" Grid.Column="1">
             <Grid.RowDefinitions>
